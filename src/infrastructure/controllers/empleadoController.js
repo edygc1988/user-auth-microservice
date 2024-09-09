@@ -1,6 +1,7 @@
 const EmpleadoRepository = require('../../domain/repositories/EmpleadoRepository');
 const RegistrarEmpleado = require('../../domain/usecases/RegistrarEmpleado');
 const { EmpleadoModel } = require('../orm');
+
 const empleadoRepository = new EmpleadoRepository({ EmpleadoModel });
 
 exports.registrar = async (req, res) => {

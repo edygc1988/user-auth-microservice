@@ -1,6 +1,6 @@
 class PersonaIndividualRepository {
-  constructor({ PersonaIndividualModel, RolModel }) {
-    this.PersonaIndividualModel = PersonaIndividualModel;
+  constructor({ PersonaModel, RolModel }) {
+    this.PersonaModel = PersonaModel;
     this.RolModel = RolModel;
   }
 
