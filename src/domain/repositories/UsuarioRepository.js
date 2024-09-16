@@ -9,6 +9,11 @@ class UsuarioRepository {
     return usuario;
   }
 
+  async obtenerUsuario(userId) {
+    const usuario = await this.UsuarioModel.findAll({ where: { id: userId }});
+    return usuario;
+  }
+
   async obtenerPorCorreo(correo) {
     return this.UsuarioModel.findOne({ where: { correo } });
   }

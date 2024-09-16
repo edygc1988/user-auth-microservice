@@ -4,7 +4,7 @@ class EmpleadoRepository {
   }
 
   async crearEmpleado(empleadoData) {
-    console.log('Datos: ' + empleadoData);
+    console.log('Datos: ' + empleadoData.nombre);
     const empleado = await this.EmpleadoModel.create(empleadoData);
     return empleado;
   }

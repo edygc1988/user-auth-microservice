@@ -1,15 +1,13 @@
 const EmpleadoRepository = require('../../domain/repositories/EmpleadoRepository');
 const RegistrarEmpleado = require('../../domain/usecases/RegistrarEmpleado');
 const { EmpleadoModel } = require('../orm');
-
 const empleadoRepository = new EmpleadoRepository({ EmpleadoModel });
 
 exports.registrar = async (req, res) => {
   try {
     const empleadoData = req.body;
     const registrarEmpleado = new RegistrarEmpleado(empleadoRepository);
-    empleadoData.usuarioId = req.userId;
-    const empleado = await registrarEmpleado.execute({ empleadoData });
+    const empleado = await registrarEmpleado.execute(empleadoData);
 
     res.status(201).json({ message: 'Empleado registrado exitosamente', empleado });
   } catch (error) {
@@ -25,7 +23,7 @@ exports.asignarUsuario = async (req, res) => {
     console.log(empleadoData);
     const empleado = await registrarEmpleado.getEmpleado({ empleadoData });
 
-    await empleadoRepository.asignarUsuario(empleado, empleadoData.UsuarioId);
+    await empleadoRepository.asignarUsuario(empleado, empleadoData.usuarioId);
 
     res.status(201).json({ message: 'Empleado registrado exitosamente', empleado });
   } catch (error) {

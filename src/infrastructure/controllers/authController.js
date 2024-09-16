@@ -45,6 +45,22 @@ exports.registrar = async (req, res) => {
   }
 };
 
+exports.obtener = async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id); // Obtener el ID de los parámetros de la ruta
+    const registrarUsuario = new RegistrarUsuario(usuarioRepository);
+    const usuario = await registrarUsuario.get(userId);
+
+    if (!usuario) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+    }
+    res.json(usuario);
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 exports.iniciarSesion = async (req, res) => {
   try {
     const { correo, contraseña } = req.body;

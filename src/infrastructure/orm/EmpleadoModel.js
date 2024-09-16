@@ -10,7 +10,8 @@ module.exports = (sequelize) => {
     correo: { type: DataTypes.STRING, allowNull: false, unique: true },
     tipoContrato: { type: DataTypes.STRING, allowNull: false },
     fechaIngreso: { type: DataTypes.DATE, allowNull: false },
-    UsuarioId: { type: DataTypes.INTEGER, allowNull: false },
+    sueldo: { type: DataTypes.DOUBLE, allowNull: false },
+    usuarioId: { type: DataTypes.INTEGER, allowNull: false },
     // Campos de auditoría
     createdAt: {
       type: DataTypes.DATE,

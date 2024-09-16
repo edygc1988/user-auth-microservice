@@ -4,6 +4,7 @@ class EmpresaRepository {
   }
 
   async crearEmpresa(empresaData) {
+    console.log('Datos: ' + empresaData.nombre);
     const empresa = await this.EmpresaModel.create(empresaData);
     return empresa;
   }

@@ -8,10 +8,10 @@ const empleadoRoutes = require('../routes/empleadoRoutes');
 const app = express();
 
 app.use(express.json());
-app.use('/api/auth', authRoutes);
-app.use('/api/empresa', empresaRoutes);
-app.use('/api/persona', personaRoutes);
-app.use('/api/empleado', empleadoRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/empresa', empresaRoutes);
+app.use('/api/v1/persona', personaRoutes);
+app.use('/api/v1/empleado', empleadoRoutes);
 
 const PORT = process.env.PORT || 3000;
 
