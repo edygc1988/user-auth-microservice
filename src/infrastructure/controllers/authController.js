@@ -47,14 +47,15 @@ exports.registrar = async (req, res) => {
 
 exports.obtener = async (req, res) => {
   try {
-    const userId = parseInt(req.params.id); // Obtener el ID de los parámetros de la ruta
+    const { correo } = req.body; // Obtener el ID de los parámetros de la ruta
     const registrarUsuario = new RegistrarUsuario(usuarioRepository);
-    const usuario = await registrarUsuario.get(userId);
+    const usuario = await registrarUsuario.getUserMail(correo);
 
     if (!usuario) {
       return res.status(404).json({ mensaje: 'Usuario no encontrado' });
     }
-    res.json(usuario);
+    res.status(200).json({ "respuesta" : 1, "nombres": usuario.nombre, "rol": "usuario" });
+    //res.json(100, usuario.nombre, usuario.roles);
 
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -67,7 +68,7 @@ exports.iniciarSesion = async (req, res) => {
     const iniciarSesion = new IniciarSesion(usuarioRepository);
     const token = await iniciarSesion.execute(correo, contraseña);
 
-    res.status(200).json({ token });
+    res.status(200).json({ "access_token" : token });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

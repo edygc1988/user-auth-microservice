@@ -15,7 +15,7 @@ class UsuarioRepository {
   }
 
   async obtenerPorCorreo(correo) {
-    return this.UsuarioModel.findOne({ where: { correo } });
+    return this.UsuarioModel.findOne({ where: { correo: correo } });
   }
 
   async asignarRoles(usuario, roles) {

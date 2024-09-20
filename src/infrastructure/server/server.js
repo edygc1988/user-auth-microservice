@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const { sequelize } = require('../orm');
 const authRoutes = require('../routes/authRoutes');
 const empresaRoutes = require('../routes/empresaRoutes');
@@ -7,7 +8,9 @@ const empleadoRoutes = require('../routes/empleadoRoutes');
 
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/empresa', empresaRoutes);
 app.use('/api/v1/persona', personaRoutes);

@@ -8,8 +8,8 @@ class RegistrarUsuario {
       return usuario;
     }
   
-    async get(userId) {
-      const usuario = await this.usuarioRepository.obtenerUsuario(userId);
+    async getUserMail(correo) {
+      const usuario = await this.usuarioRepository.obtenerPorCorreo(correo);
       return usuario;
     }
   }
