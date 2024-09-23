@@ -13,7 +13,7 @@ class IniciarSesion {
     const contraseñaValida = await bcrypt.compare(contraseña, usuario.contraseña);
     if (!contraseñaValida) throw new Error('Contraseña incorrecta');
 
-    const token = jwt.sign({ id: usuario.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: usuario.id }, process.env.JWT_SECRET, { expiresIn: Number(process.env.TOKEN_TIME) });
     return token;
   }
 }

@@ -67,8 +67,9 @@ exports.iniciarSesion = async (req, res) => {
     const { correo, contraseña } = req.body;
     const iniciarSesion = new IniciarSesion(usuarioRepository);
     const token = await iniciarSesion.execute(correo, contraseña);
-
-    res.status(200).json({ "access_token" : token });
+    res.status(200).json({ "access_token" : token,  
+      "expires_in": Number(process.env.TOKEN_TIME),
+      "token_type": 'Bearer' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
