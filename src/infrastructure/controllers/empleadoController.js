@@ -31,6 +31,23 @@ exports.asignarUsuario = async (req, res) => {
   }
 };
 
+exports.getEmpleadoByBoss = async (req, res) => {
+  try {
+    const empleadoData = req.params.id;
+    const registrarEmpleado = new RegistrarEmpleado(empleadoRepository);        
+    const empleado = await registrarEmpleado.getEmpleadoByBoss(empleadoData);
+
+    if (!empleado) {
+      return res.status(404).json({ message: 'Empleado no encontrado' });
+    }
+
+    res.status(200).json(empleado);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 exports.asignarPersona = async (req, res) => {
   try {
     const usaurioData = req.body;

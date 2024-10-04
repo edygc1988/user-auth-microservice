@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   const EmpleadoModel = sequelize.define('Empleado', {
     identificacion: { type: DataTypes.STRING, allowNull: false },
-    tipoIdentificacion: { type: DataTypes.STRING, allowNull: false },
+    tipoIdentificacion: { type: DataTypes.NUMBER, allowNull: false },
     nombre: { type: DataTypes.STRING, allowNull: false },
     direccion: { type: DataTypes.STRING, allowNull: false },
     telefono: { type: DataTypes.STRING, allowNull: false },
@@ -39,6 +39,25 @@ module.exports = (sequelize) => {
     timestamps: true, // Añade automáticamente createdAt y updatedAt
     paranoid: true,   // Añade automáticamente deletedAt para soft delete
   });
+
+  // Relaciones
+  EmpleadoModel.associate = (models) => {
+    EmpleadoModel.belongsToMany(models.PersonaIndividual, {
+      through: 'EmpleadoPersonaIndividual',
+      foreignKey: 'empleadoId',
+      otherKey: 'personaIndividualId',
+      as: 'personas'
+    });
+
+    EmpleadoModel.belongsToMany(models.Empresa, {
+      through: 'EmpleadoEmpresa',
+      foreignKey: 'empleadoId',
+      otherKey: 'empresaId',
+      as: 'empresas'
+    });
+  };
+
+
 
   return EmpleadoModel;
 };

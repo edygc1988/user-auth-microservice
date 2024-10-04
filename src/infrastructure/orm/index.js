@@ -9,6 +9,8 @@
     const EmpresaModel = require('./EmpresaModel')(sequelize);
     const PersonaModel = require('./PersonaIndividualModel')(sequelize);
     const EmpleadoModel = require('./EmpleadoModel')(sequelize);
+    const EmpleadoPersonaModel = require('./EmpleadoPersonaModel')(sequelize);
+    const EmpleadoEmpresaModel = require('./EmpleadoEmpresaModel')(sequelize);
 
     UsuarioModel.belongsToMany(RolModel, { through: UsuarioRolModel });
     RolModel.belongsToMany(UsuarioModel, { through: UsuarioRolModel });
@@ -19,4 +21,4 @@
 
     sequelize.sync();
 
-    module.exports = { sequelize, UsuarioModel, RolModel, UsuarioRolModel, EmpresaModel, PersonaModel, EmpleadoModel };
+    module.exports = { sequelize, UsuarioModel, RolModel, UsuarioRolModel, EmpresaModel, PersonaModel, EmpleadoModel, EmpleadoPersonaModel, EmpleadoEmpresaModel };

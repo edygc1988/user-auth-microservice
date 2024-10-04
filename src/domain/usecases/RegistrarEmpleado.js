@@ -12,6 +12,11 @@ class RegistrarEmpleado {
       const empleado = await this.empleadoRepository.findAll({ where : { id: empleadoData.id} });
       return empleado;
     }
+  
+    async getEmpleadoByBoss(empleadoData) {
+      const empleado = await this.empleadoRepository.getEmpleadoByBoss(empleadoData);
+      return empleado;
+    }
   }
 
   

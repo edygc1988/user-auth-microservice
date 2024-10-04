@@ -14,3 +14,18 @@ exports.registrar = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getByUser = async (req, res) => {
+  try {
+    const registrarEmpresa = new RegistrarEmpresa(empresaRepository);
+    const empresa = await registrarEmpresa.getByUser(req.userId);
+
+    if (!empresa) {
+      return res.status(404).json({ message: 'Empresas no encontradas' });
+    }
+
+    res.status(200).json(empresa);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

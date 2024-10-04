@@ -1,37 +1,42 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  const EmpleadoPersonaModel = sequelize.define(
-    "EmpleadoPersona",
-    {
-      // Campos de auditoría
-      createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
-      },
-      updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: true,
-      },
-      createdBy: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      updatedBy: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      deletedAt: {
-        type: DataTypes.DATE,
-        allowNull: true,
-      },
+  const EmpleadoPersonaIndividualModel = sequelize.define('EmpleadoPersonaIndividual', {
+    empleadoId: {
+      type: DataTypes.INTEGER,
+      references: { model: 'Empleado', key: 'id' },
+      allowNull: false,
     },
-    {
-      tableName: "EmpleadoPersona",
-      timestamps: true, // Añade automáticamente createdAt y updatedAt
-      paranoid: true, // Añade automáticamente deletedAt para soft delete
-    }
-  );
-  return EmpleadoPersonaModel;
+    personaIndividualId: {
+      type: DataTypes.INTEGER,
+      references: { model: 'PersonaIndividual', key: 'id' },
+      allowNull: false,
+    },
+    fechaInicio: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    fechaFin: {
+      type: DataTypes.DATE,
+      allowNull: true, // Null si todavía está activo
+    },
+    rol: {
+      type: DataTypes.STRING,
+      allowNull: true, // Rol del empleado si es necesario
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+  }, {
+    tableName: 'EmpleadoPersonaIndividual',
+    timestamps: true,
+  });
+
+  return EmpleadoPersonaIndividualModel;
 };

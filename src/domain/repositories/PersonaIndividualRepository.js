@@ -9,8 +9,8 @@ class PersonaIndividualRepository {
     return persona;
   }
 
-  async obtenerPorCorreo(correo) {
-    return this.UsuarioModel.findOne({ where: { correo } });
+  async getByUser(userId) {
+    return await this.PersonaModel.findAll({where: {usuarioId: userId}});
   }
 
   async asignarRoles(usuario, roles) {

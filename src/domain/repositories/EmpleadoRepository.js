@@ -4,8 +4,12 @@ class EmpleadoRepository {
   }
 
   async crearEmpleado(empleadoData) {
-    console.log('Datos: ' + empleadoData.nombre);
     const empleado = await this.EmpleadoModel.create(empleadoData);
+    return empleado;
+  }
+
+  async getEmpleadoByBoss(empleadoData) {
+    const empleado = await this.EmpleadoModel.findAll({where: {id: empleadoData}});
     return empleado;
   }
 

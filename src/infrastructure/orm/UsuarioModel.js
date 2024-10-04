@@ -6,6 +6,7 @@ module.exports = (sequelize) => {
     nombre: { type: DataTypes.STRING, allowNull: false },
     correo: { type: DataTypes.STRING, allowNull: false, unique: true },
     contraseña: { type: DataTypes.STRING, allowNull: false },
+    refreshToken: {type: DataTypes.STRING },
     // Campos de auditoría
     createdAt: {
       type: DataTypes.DATE,
@@ -41,7 +42,7 @@ module.exports = (sequelize) => {
   UsuarioModel.associate = (models) => {
     UsuarioModel.belongsToMany(models.Rol, {
       through: 'UsuarioRol',
-      as: 'roles',
+      as: 'Rols',
       foreignKey: 'usuarioId'
     });
   };
