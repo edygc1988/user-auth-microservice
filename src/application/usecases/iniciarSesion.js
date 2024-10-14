@@ -32,7 +32,6 @@ class IniciarSesion {
     
     return {token};
   }
-
 }
 
 module.exports = IniciarSesion;

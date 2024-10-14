@@ -2,11 +2,12 @@ const express = require('express');
 const cors = require('cors');  // Importa el paquete CORS
 
 const bodyParser = require('body-parser');
-const { sequelize } = require('../orm');
-const authRoutes = require('../routes/authRoutes');
-const empresaRoutes = require('../routes/empresaRoutes');
-const personaRoutes = require('../routes/personaIndividualRoutes');
-const empleadoRoutes = require('../routes/empleadoRoutes');
+const { sequelize } = require('../database');
+const authRoutes = require('./routes/authRoutes');
+const empresaRoutes = require('./routes/empresaRoutes');
+const personaRoutes = require('./routes/personaIndividualRoutes');
+const empleadoRoutes = require('./routes/empleadoRoutes');
+const { startProducer } = require('../events/kafkaProducer');
 
 const app = express();
 
@@ -27,4 +28,5 @@ app.listen(PORT, async () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
   await sequelize.authenticate();
   console.log('Base de datos conectada');
+  await startProducer();
 });

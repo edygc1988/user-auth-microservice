@@ -3,15 +3,12 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   const EmpleadoModel = sequelize.define('Empleado', {
     identificacion: { type: DataTypes.STRING, allowNull: false },
-    tipoIdentificacion: { type: DataTypes.NUMBER, allowNull: false },
+    tipoIdentificacion: { type: DataTypes.INTEGER, allowNull: false },
     nombre: { type: DataTypes.STRING, allowNull: false },
     direccion: { type: DataTypes.STRING, allowNull: false },
     telefono: { type: DataTypes.STRING, allowNull: false },
     correo: { type: DataTypes.STRING, allowNull: false, unique: true },
-    tipoContrato: { type: DataTypes.STRING, allowNull: false },
-    fechaIngreso: { type: DataTypes.DATE, allowNull: false },
-    sueldo: { type: DataTypes.DOUBLE, allowNull: false },
-    usuarioId: { type: DataTypes.INTEGER, allowNull: false },
+    usuarioId: { type: DataTypes.STRING, allowNull: false },
     // Campos de auditoría
     createdAt: {
       type: DataTypes.DATE,
@@ -46,15 +43,16 @@ module.exports = (sequelize) => {
       through: 'EmpleadoPersonaIndividual',
       foreignKey: 'empleadoId',
       otherKey: 'personaIndividualId',
-      as: 'personas'
+      as: 'personas' // Alias coincide con el usado en la consulta
     });
-
+    
     EmpleadoModel.belongsToMany(models.Empresa, {
       through: 'EmpleadoEmpresa',
       foreignKey: 'empleadoId',
       otherKey: 'empresaId',
-      as: 'empresas'
+      as: 'empresas' // Alias coincide con el usado en la consulta
     });
+    
   };
 
 

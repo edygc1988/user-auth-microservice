@@ -1,13 +1,15 @@
-const PersonaRepository = require('../../domain/repositories/PersonaIndividualRepository');
-const RegistrarPersona = require('../../domain/usecases/RegistrarPersonaIndividual');
-const { PersonaModel, UsuarioModel } = require('../orm');
-const personaRepository = new PersonaRepository({ PersonaModel, UsuarioModel });
+const PersonaRepository = require('../../../domain/repositories/personaIndividualRepository');
+const RegistrarPersona = require('../../../application/usecases/registrarPersonaIndividual');
+const { PersonaIndividualModel, UsuarioModel } = require('../../database');
+const {sendBossEvent} = require('../../events/kafkaProducer');
+const personaRepository = new PersonaRepository({ PersonaIndividualModel, UsuarioModel });
 
 exports.registrar = async (req, res) => {
   try {
     const personaData = req.body;
     const registrarPersona = new RegistrarPersona(personaRepository);
     const persona = await registrarPersona.execute(personaData);  
+    await sendBossEvent(persona);
 
     res.status(201).json({ message: 'Registrado como persona individual exitosamente', persona });
   } catch (error) {

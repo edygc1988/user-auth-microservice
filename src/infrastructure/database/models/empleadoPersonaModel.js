@@ -20,6 +20,8 @@ module.exports = (sequelize) => {
       type: DataTypes.DATE,
       allowNull: true, // Null si todavía está activo
     },
+    tipoContrato: { type: DataTypes.STRING, allowNull: false },
+    sueldo: { type: DataTypes.DOUBLE, allowNull: false },
     rol: {
       type: DataTypes.STRING,
       allowNull: true, // Rol del empleado si es necesario

@@ -1,6 +1,7 @@
-const EmpresaRepository = require('../../domain/repositories/EmpresaRepository');
-const RegistrarEmpresa = require('../../domain/usecases/RegistrarEmpresa');
-const { EmpresaModel } = require('../orm');
+const EmpresaRepository = require('../../../domain/repositories/empresaRepository');
+const RegistrarEmpresa = require('../../../application/usecases/registrarEmpresa');
+const { EmpresaModel } = require('../../database');
+const {sendBossEvent} = require('../../events/kafkaProducer');
 const empresaRepository = new EmpresaRepository({ EmpresaModel });
 
 exports.registrar = async (req, res) => {
@@ -8,6 +9,7 @@ exports.registrar = async (req, res) => {
     const empresaData = req.body;
     const registrarEmpresa = new RegistrarEmpresa(empresaRepository);
     const empresa = await registrarEmpresa.execute(empresaData);
+    await sendBossEvent(empresa);
 
     res.status(201).json({ message: 'Usuario registrado exitosamente ' + req.userId, empresa });
   } catch (error) {

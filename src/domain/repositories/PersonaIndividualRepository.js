@@ -1,16 +1,16 @@
 class PersonaIndividualRepository {
-  constructor({ PersonaModel, RolModel }) {
-    this.PersonaModel = PersonaModel;
+  constructor({ PersonaIndividualModel, RolModel }) {
+    this.PersonaIndividualModel = PersonaIndividualModel;
     this.RolModel = RolModel;
   }
 
   async crearPersona(personaData) {
-    const persona = await this.PersonaModel.create(personaData);
+    const persona = await this.PersonaIndividualModel.create(personaData);
     return persona;
   }
 
   async getByUser(userId) {
-    return await this.PersonaModel.findAll({where: {usuarioId: userId}});
+    return await this.PersonaIndividualModel.findAll({where: {usuarioId: userId}});
   }
 
   async asignarRoles(usuario, roles) {

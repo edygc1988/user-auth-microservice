@@ -1,7 +1,9 @@
 class UsuarioRepository {
-  constructor({ UsuarioModel, RolModel }) {
+  constructor({ UsuarioModel, RolModel, EmpresaModel, PersonaIndividualModel }) {
     this.UsuarioModel = UsuarioModel;
     this.RolModel = RolModel;
+    this.EmpresaModel = EmpresaModel;
+    this.PersonaIndividualModel = PersonaIndividualModel;
   }
 
   async crearUsuario(usuarioData) {
@@ -21,6 +23,21 @@ class UsuarioRepository {
         model: this.RolModel,
         as: 'Rols',
         through: { attributes: [] } // Esto evita que se incluyan los atributos de la tabla intermedia
+      }]
+    });
+  }
+
+  async obtenerEmpresaPeronaByUserId(id){
+    return this.UsuarioModel.findByPk(id,{
+      include: [{
+        model: this.EmpresaModel,
+        as: "empresa",
+        //through: "Empresa" // Esto evita que se incluyan los atributos de la tabla intermedia
+      },
+      {
+        model: this.PersonaIndividualModel,
+        as: "personaIndividual",
+        //through: "PersonaIndividual" // Esto evita que se incluyan los atributos de la tabla intermedia
       }]
     });
   }
