@@ -9,6 +9,7 @@ exports.registrar = async (req, res) => {
     const empresaData = req.body;
     const registrarEmpresa = new RegistrarEmpresa(empresaRepository);
     const empresa = await registrarEmpresa.execute(empresaData);
+    console.log(empresa);
     await sendBossEvent(empresa);
 
     res.status(201).json({ message: 'Usuario registrado exitosamente ' + req.userId, empresa });

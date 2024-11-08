@@ -17,7 +17,7 @@ class UsuarioRepository {
   }
 
   async obtenerPorCorreo(correo) {
-    return this.UsuarioModel.findOne({
+    return await this.UsuarioModel.findOne({
       where: { correo: correo },
       include: [{
         model: this.RolModel,
@@ -28,7 +28,7 @@ class UsuarioRepository {
   }
 
   async obtenerEmpresaPeronaByUserId(id){
-    return this.UsuarioModel.findByPk(id,{
+    return await this.UsuarioModel.findByPk(id,{
       include: [{
         model: this.EmpresaModel,
         as: "empresa",
@@ -43,13 +43,16 @@ class UsuarioRepository {
   }
 
   async obtenerPorToken(token) {
-    return this.UsuarioModel.findOne({ where: { refreshToken: token } });
+    return await this.UsuarioModel.findOne({ where: { refreshToken: token } });
   }
 
   async asignarRoles(usuario, roles) {
     const rolesEncontrados = await this.RolModel.findAll({ where: { nombre: roles } });
-    return usuario.setRoles(rolesEncontrados);
+    usuario.setRols(rolesEncontrados, { through: { 'createdBy': usuario.nombre } } );
+  
+    console.log(`Roles asignados al usuario: ${rolesEncontrados.map(r => r.nombre).join(', ')}`);
   }
+  
   
 
   async asignarRefreshToken(correo, refreshToken) {

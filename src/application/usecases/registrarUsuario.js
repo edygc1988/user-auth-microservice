@@ -8,6 +8,10 @@ class RegistrarUsuario {
       return usuario;
     }
 
+    async asignarRoles(usuario, roles) {
+      return await this.usuarioRepository.asignarRoles(usuario, roles);
+    }
+
     async obtenerEmpresaPeronaByUserId(id){
       return await this.usuarioRepository.obtenerEmpresaPeronaByUserId(id);
     }

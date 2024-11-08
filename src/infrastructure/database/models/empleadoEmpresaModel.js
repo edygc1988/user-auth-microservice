@@ -22,6 +22,9 @@ module.exports = (sequelize) => {
     },
     tipoContrato: { type: DataTypes.STRING, allowNull: false },
     sueldo: { type: DataTypes.DOUBLE, allowNull: false },
+    horas: { type: DataTypes.INTEGER, allowNull: false},
+    mensualizaDecimoTercero: { type: DataTypes.INTEGER },
+    mensualizaDecimoCuarto: { type: DataTypes.INTEGER},
     rol: {
       type: DataTypes.STRING,
       allowNull: true,

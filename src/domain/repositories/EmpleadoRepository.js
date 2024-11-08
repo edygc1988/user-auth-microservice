@@ -18,27 +18,41 @@ class EmpleadoRepository {
   async getEmpleadoByBoss(empleadoData) {
     const empleado = await this.EmpleadoModel.findAll({
       where: { usuarioId: empleadoData },
+      include: [
+        {
+          model: this.EmpresaModel,
+          as: "empresas",
+          through: { attributes: ["tipoContrato", "sueldo"] },
+          attributes: ["id", "nombre", "tipo", "identificacion"], // Ajusta según los campos que necesites
+        },
+      ],
     });
+    console.log(empleado);
     return empleado;
   }
 
   async getEmpleadoByMail(correo) {
-    const empleado = await this.EmpleadoModel.findOne({where:{correo: correo}});
+    const empleado = await this.EmpleadoModel.findOne({
+      where: { correo: correo },
+    });
     return empleado;
   }
 
   async getByMail(correo) {
-    const empleado = await this.EmpleadoModel.findOne({where: { correo: correo }, 
+    const empleado = await this.EmpleadoModel.findOne({
+      where: { correo: correo },
       include: [
-        { model: this.EmpresaModel, 
-          as: "empresas",           
-          through: { attributes: ['tipoContrato','sueldo'] }, 
-          attributes: ['id', 'nombre', 'tipo', 'identificacion'] // Ajusta según los campos que necesites
+        {
+          model: this.EmpresaModel,
+          as: "empresas",
+          through: { attributes: ["tipoContrato", "sueldo", "mensualizaDecimoTercero", "mensualizaDecimoCuarto", "fechaInicio", "fechaFin"] },
+          attributes: ["id", "nombre", "tipo", "identificacion"], // Ajusta según los campos que necesites
         }, // Relación Empleado-Empresa
-        { model: this.PersonaIndividualModel, 
-          as: "personas" ,
-          through: { attributes: ['tipoContrato','sueldo'] }, 
-          attributes: ['id', 'nombre', 'tipo', 'identificacion'] // Ajusta según los campos que necesites
+        {
+          model: this.PersonaIndividualModel,
+          as: "personas",
+          through: { attributes: ["tipoContrato", "sueldo", "mensualizaDecimoTercero", "mensualizaDecimoCuarto", "fechaInicio", "fechaFin"] },
+          attributes: ["id", "nombre", "tipo", "identificacion"], // Ajusta según los campos que necesites
         }, // Relación Empleado-Persona
       ],
     });
@@ -52,23 +66,31 @@ class EmpleadoRepository {
         identificacion: empleado.identificacion,
         nombre: empleado.nombre,
         correo: empleado.correo,
-        empresas: empleado.empresas.map(empresa => ({
+        empresas: empleado.empresas.map((empresa) => ({
           id: empresa.id,
           nombre: empresa.nombre,
           identificacion: empresa.identificacion,
           tipo: empresa.tipo,
           tipoContrato: empresa.EmpleadoEmpresa.tipoContrato,
-          sueldo: empresa.EmpleadoEmpresa.sueldo
+          sueldo: empresa.EmpleadoEmpresa.sueldo,
+          mensualizaDecimoTercero: empresa.EmpleadoEmpresa.mensualizaDecimoTercero,
+          mensualizaDecimoCuarto: empresa.EmpleadoEmpresa.mensualizaDecimoCuarto,
+          fechaInicio: empresa.EmpleadoEmpresa.fechaInicio,
+          fechaFin: empresa.EmpleadoEmpresa.fechaFin,
         })),
-        personas: empleado.personas.map(persona => ({
+        personas: empleado.personas.map((persona) => ({
           id: persona.id,
           nombre: persona.nombre,
           identificacion: persona.identificacion,
           tipo: persona.tipo,
           tipoContrato: persona.EmpleadoPersonaIndividual.tipoContrato,
-          sueldo: persona.EmpleadoPersonaIndividual.sueldo
-        }))
-      }
+          sueldo: persona.EmpleadoPersonaIndividual.sueldo,
+          mensualizaDecimoTercero: empresa.EmpleadoPersonaIndividual.mensualizaDecimoTercero,
+          mensualizaDecimoCuarto: empresa.EmpleadoPersonaIndividual.mensualizaDecimoCuarto,
+          fechaInicio: empresa.EmpleadoPersonaIndividual.fechaInicio,
+          fechaFin: empresa.EmpleadoPersonaIndividual.fechaFin,
+        })),
+      },
     };
   }
 

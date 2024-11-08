@@ -33,6 +33,7 @@ const sendEmployeeEvent = async (employeeData) => {
 };
 
 const sendBossEvent = async (bossData) => {
+  console.log(bossData);
   await producer.send({
       topic: 'jefe-events',
       messages: [{

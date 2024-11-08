@@ -16,10 +16,14 @@ const EmpleadoEmpresaModel = require('./models/empleadoEmpresaModel')(sequelize)
 UsuarioModel.belongsToMany(RolModel, { through: UsuarioRolModel });
 RolModel.belongsToMany(UsuarioModel, { through: UsuarioRolModel });
 
-// Relaciones de Usuario con Persona y Empleado
-UsuarioModel.hasOne(EmpresaModel, { foreignKey: 'usuarioId', as: 'empresa' }); // Ajusta el alias a 'empresa'
-UsuarioModel.hasOne(PersonaIndividualModel, { foreignKey: 'usuarioId', as: 'personaIndividual' }); // Ajusta el alias a 'personaIndividual'
 
+// Relaciones de Usuario con Persona y Empresa (uno a muchos)
+UsuarioModel.hasMany(EmpresaModel, { foreignKey: 'usuarioId', as: 'empresas' }); // Un usuario puede tener muchas empresas
+UsuarioModel.hasMany(PersonaIndividualModel, { foreignKey: 'usuarioId', as: 'personasIndividuales' }); // Un usuario puede tener muchas personas individuales
+
+// Relaciones de Empresa y Persona con Usuario (opcional, si quieres poder acceder a un usuario desde una empresa o persona)
+EmpresaModel.belongsTo(UsuarioModel, { foreignKey: 'usuarioId', as: 'usuario' });
+PersonaIndividualModel.belongsTo(UsuarioModel, { foreignKey: 'usuarioId', as: 'usuario' });
 
 
 // Relaciones de Empleado con Empresa y PersonaIndividual (Estas son las relaciones que faltaban)
@@ -53,7 +57,7 @@ PersonaIndividualModel.belongsToMany(EmpleadoModel, {
 });
 
 // Sincronización de modelos con la base de datos
-sequelize.sync();
+sequelize.sync({alter:true});
 
 module.exports = { 
   sequelize, 

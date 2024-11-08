@@ -1,9 +1,12 @@
+const ValidationService = require('../../domain/services/validationService');
+
 class RegistrarEmpresa {
     constructor(empresaRepository) {
       this.empresaRepository = empresaRepository;
     }
   
     async execute(empresaData) {
+      ValidationService.validarCamposUsuario(empresaData);
       const empresa = await this.empresaRepository.crearEmpresa(empresaData);
       return empresa;
     }

@@ -22,13 +22,13 @@ const iniciarSesion = new IniciarSesion(usuarioRepository);
 
 exports.registrar = async (req, res) => {
   try {
-    const usaurioData = req.body;
-    const usuario = await registrarUsuario.execute(usaurioData);
+    const usuarioData = req.body;
+    const usuario = await registrarUsuario.execute(usuarioData);
 
-    if (roles) {
-      await usuarioRepository.asignarRoles(usuario, usuarioData.roles);
+    if (usuarioData.roles) {
+      await registrarUsuario.asignarRoles(usuario, usuarioData.roles);
     } else {
-      await usuarioRepository.asignarRoles(usuario, ['empleado']);
+      await registrarUsuario.asignarRoles(usuario, 'usuario');
     }
 
     res.status(201).json({ message: 'Usuario registrado exitosamente', usuario });
@@ -64,6 +64,8 @@ exports.obtener = async (req, res) => {
     let empleadoId;
     if(empleado)
       empleadoId = empleado.id;
+    else 
+      empleadoId = 0;
 
     if (!usuario) {
       return res.status(404).json({ mensaje: 'Usuario no encontrado' });

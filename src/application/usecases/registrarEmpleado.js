@@ -1,9 +1,12 @@
+const ValidationService = require('../../domain/services/validationService');
+
 class RegistrarEmpleado {
     constructor(empleadoRepository) {
       this.empleadoRepository = empleadoRepository;
     }
   
     async execute(empleadoData) {
+      ValidationService.validarCamposUsuario(empleadoData);
       return await this.empleadoRepository.crearEmpleado(empleadoData);
     }
 
