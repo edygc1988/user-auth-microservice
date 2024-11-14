@@ -9,8 +9,8 @@ class EmpresaRepository {
     return empresa;
   }
 
-  async obtenerPorCorreo(correo) {
-    return this.UsuarioModel.findOne({ where: { correo } });
+  async getByUser(userId) {
+    return this.EmpresaModel.findAll({ where: { usuarioId:  userId} });
   }
 
   async asignarRoles(usuario, roles) {

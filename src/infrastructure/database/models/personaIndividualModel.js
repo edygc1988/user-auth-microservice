@@ -1,11 +1,15 @@
 const { DataTypes } = require('sequelize');
-const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize) => {
-  const UsuarioModel = sequelize.define('Usuario', {
+  const PersonaIndividualModel = sequelize.define('PersonaIndividual', {
+    identificacion: { type: DataTypes.STRING, allowNull: false },
+    tipoIdentificacion: { type: DataTypes.INTEGER, allowNull: false },
     nombre: { type: DataTypes.STRING, allowNull: false },
+    direccion: { type: DataTypes.STRING, allowNull: false },
+    telefono: { type: DataTypes.STRING, allowNull: false },
     correo: { type: DataTypes.STRING, allowNull: false, unique: true },
-    contraseña: { type: DataTypes.STRING, allowNull: false },
+    usuarioId: { type: DataTypes.INTEGER, allowNull: false },
+    tipo: { type: DataTypes.INTEGER, allowNull: false},
     // Campos de auditoría
     createdAt: {
       type: DataTypes.DATE,
@@ -29,22 +33,21 @@ module.exports = (sequelize) => {
       allowNull: true,
     },
   }, {
-    tableName: 'Usuario',
+    tableName: 'PersonaIndividual',
     timestamps: true, // Añade automáticamente createdAt y updatedAt
     paranoid: true,   // Añade automáticamente deletedAt para soft delete
   });
 
-  UsuarioModel.beforeCreate(async (usuario) => {
-    usuario.contraseña = await bcrypt.hash(usuario.contraseña, 10);
-  });
 
-  UsuarioModel.associate = (models) => {
-    UsuarioModel.belongsToMany(models.Rol, {
-      through: 'UsuarioRol',
-      as: 'roles',
-      foreignKey: 'usuarioId'
+  // Relaciones
+  PersonaIndividualModel.associate = (models) => {
+    PersonaIndividualModel.belongsToMany(models.Empleado, {
+      through: 'EmpleadoPersonaIndividual',
+      foreignKey: 'personaIndividualId',
+      otherKey: 'empleadoId',
+      as: 'empleados'
     });
   };
 
-  return UsuarioModel;
+  return PersonaIndividualModel;
 };

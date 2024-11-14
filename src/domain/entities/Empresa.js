@@ -1,5 +1,5 @@
 class Empresa {
-    constructor({ id, identificacion, tipoIdentificacion, nombre, direccion, telefono, correo, createdBy }) {
+    constructor({ id, identificacion, tipoIdentificacion, nombre, direccion, telefono, correo, usuarioId, createdBy }) {
       this.id = id;
       this.identificacion = identificacion;
       this.tipoIdentificacion = tipoIdentificacion;
@@ -7,6 +7,7 @@ class Empresa {
       this.direccion = direccion;
       this.telefono = telefono;
       this.correo = correo;
+      this.usuarioId = usuarioId;
       this.createdBy = createdBy;
     }
   }
