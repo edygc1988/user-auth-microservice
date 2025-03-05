@@ -1,7 +1,5 @@
-version: '3.8'
-
+version: '3'
 services:
-  # Servicio de PostgreSQL
   db:
     image: postgres:13
     container_name: user_auth_db
@@ -13,8 +11,7 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-  
-  # Servicio del microservicio de autenticación
+
   user-auth-service:
     build:
       context: .
@@ -28,6 +25,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
       JWT_SECRET: ${JWT_SECRET}
+      KAFKA_BROKER: ${KAFKA_BROKER}  # Usa el nombre del servicio de Kafka
     ports:
       - "3003:3000"
     depends_on:

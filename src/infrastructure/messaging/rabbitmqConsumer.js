@@ -25,7 +25,6 @@ class RabbitMQConsumer {
         const validarSesion = new ValidarSesion(this.usuarioRepository);
         const result = await onMessageCallback(validarSesion.execute(usuarioData.correo, usuarioData.contraseña, usuarioData.token));
         console.log(result);
-        //await this.authController.validarSesion(usuarioData);
 
         this.channel.ack(msg);
       }

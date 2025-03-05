@@ -59,7 +59,6 @@ exports.obtener = async (req, res) => {
     const usuario = await registrarUsuario.getUserMail(correo);
 
     const empleado = await registrarEmpleado.getEmpleadoByMail(correo);
-    console.log(empleado);
 
     let empleadoId;
     if(empleado)
@@ -82,6 +81,7 @@ exports.iniciarSesion = async (req, res) => {
     const { correo, contraseña, refresh_token, grant_type } = req.body;
     if(grant_type=='password'){
       const {token, refresh_token} = await iniciarSesion.execute(correo, contraseña);
+      console.log('Paso el envio de notificacion');
       this.token = token;
       this.refreshToken = refresh_token;
 

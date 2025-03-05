@@ -1,3 +1,5 @@
+const NotificationService = require('../services/notificationService');
+
 class Empleado {
     constructor({ id, tipoIdentificacion, identificacion, nombre, direccion, telefono, tipoContrato, fechaIngreso, sueldo, usuarioId, correo, createdBy }) {
       this.id = id;
@@ -12,6 +14,9 @@ class Empleado {
       this.sueldo = sueldo;
       this.usuarioId = usuarioId;
       this.createdBy = createdBy;
+    }
+    async notiy(empleador) {
+      await NotificationService.sendEmployeeRegistrationEmail(this.correo, this.nombre, empleador);
     }
   }
   

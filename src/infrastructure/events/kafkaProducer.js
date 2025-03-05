@@ -3,9 +3,8 @@ const { Kafka } = require('kafkajs');
 
 const kafka = new Kafka({
   clientId: 'employee-service',
-  brokers: ['localhost:29092'],
+  brokers: [process.env.KAFKA_BROKER || 'localhost:29092'], // Usa la variable de entorno o un valor por defecto
 });
-
 
 const producer = kafka.producer();
 

@@ -1,3 +1,5 @@
+const NotificationService = require('../services/notificationService');
+
 class Empresa {
     constructor({ id, identificacion, tipoIdentificacion, nombre, direccion, telefono, correo, usuarioId, createdBy }) {
       this.id = id;
@@ -9,6 +11,10 @@ class Empresa {
       this.correo = correo;
       this.usuarioId = usuarioId;
       this.createdBy = createdBy;
+    }
+
+    async notify() {
+      await NotificationService.sendCompanyRegistrationEmail(this.correo, this.nombre);
     }
   }
   
